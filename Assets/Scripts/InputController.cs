@@ -13,6 +13,8 @@ public class InputController : MonoBehaviour
 
     public GameObject panelEndGame;
 
+    public GameObject sound;
+
     private void Start()
     {
         BoardManager.Instance.CreateBoard(WIDTH_DEFAULT, HEIGHT_DEFAULT, COLORS_DEFAULT);
@@ -76,6 +78,7 @@ public class InputController : MonoBehaviour
     {
         if (matchingTiles.Count > 2)
         {
+            Instantiate(sound, rayHit.transform.position, Quaternion.identity);
             for (int i = 0; i < matchingTiles.Count; i++)
             {
                 matchingTiles[i].GetComponent<SpriteRenderer>().sprite = null;

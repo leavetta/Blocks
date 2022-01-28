@@ -103,7 +103,7 @@ public class BoardManager : MonoBehaviour
 		List<SpriteRenderer> renders = new List<SpriteRenderer>();
 		int nullCount = 0;
 		
-		for (int y = yStart; y < _ySize; y++)
+		for (int y = yStart; y < _ySize; y++)//поиск всех блоков без спрайтов в данном столбце
 		{
 			SpriteRenderer render = _tiles[x, y].GetComponent<SpriteRenderer>();
 			if (render.sprite == null)
@@ -113,7 +113,7 @@ public class BoardManager : MonoBehaviour
 			renders.Add(render);
 		}
 
-		for (int y = _ySize - 1; y >= yStart; y--)
+		for (int y = _ySize - 1; y >= yStart; y--) //убирается количество нулевых блоков, над которыми уже нет блоков со спрайтами
 		{
 			SpriteRenderer render = _tiles[x, y].GetComponent<SpriteRenderer>();
 			if (render.sprite == null)
@@ -125,16 +125,16 @@ public class BoardManager : MonoBehaviour
 		}
 
 		int j = 0;
-		for (int i = 0; i < nullCount; i++)
+		for (int i = 0; i < nullCount; i++)//цикл по количеству удаленных объектов
 		{
-			while (j < renders.Count - 1)
+			while (j < renders.Count - 1)// для случая когда в столбце null элементы идут не подряд, или не один элемент, а в виде null sprite null sprite 
 			{
 				if (renders[j].sprite != null)
 					j++;
 				else
 					break;
 			}
-			for (int k = j; k < renders.Count - 1; k++)
+			for (int k = j; k < renders.Count - 1; k++)//поочередный обмен местами спрайтов
 			{
 				Sprite temp = renders[k].GetComponent<SpriteRenderer>().sprite;
 				renders[k].sprite = renders[k + 1].sprite;

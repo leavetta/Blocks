@@ -11,6 +11,8 @@ public class InputController : MonoBehaviour
     private const int HEIGHT_DEFAULT = 10;
     private const int COLORS_DEFAULT = 3;
 
+    public GameObject panelEndGame;
+
     private void Start()
     {
         BoardManager.Instance.CreateBoard(WIDTH_DEFAULT, HEIGHT_DEFAULT, COLORS_DEFAULT);
@@ -39,6 +41,10 @@ public class InputController : MonoBehaviour
                 DeleteMatch(rayHit);
                 BoardManager.Instance.FallBlocks();
                 check = BoardManager.Instance.CheckMatches();
+                if (!check)
+                {
+                    panelEndGame.SetActive(true);
+                }
                 Debug.Log(check);
             }
         }

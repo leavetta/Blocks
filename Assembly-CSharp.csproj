@@ -60,8 +60,11 @@
     <Compile Include="Assets\Scripts\Tile.cs" />
     <Compile Include="Assets\Scripts\StartButton.cs" />
     <Compile Include="Assets\Scripts\BoardManager.cs" />
-    <Compile Include="Assets\Scripts\Tile1.cs" />
     <Compile Include="Assets\Scripts\InputController.cs" />
+    <Compile Include="Assets\Scripts\Tile1.cs" />
+    <Compile Include="Assets\Scripts\OkButton.cs" />
+    <Compile Include="Assets\Scripts\RestartButton.cs" />
+    <Compile Include="Assets\Scripts\EndGameButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

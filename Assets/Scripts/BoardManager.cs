@@ -42,11 +42,45 @@ public class BoardManager : MonoBehaviour
 		xSize = width;
 		ySize = height;
 		//instance = GetComponent<BoardManager>();
-		if (xSize > 10)
+
+		float widthScreenSize = 11.0f;
+		float heightScreenSize = 8.0f;
+		float compareX = 0.7f, compareY = 0.7f;
+
+		compareX = widthScreenSize / xSize;
+		compareY = heightScreenSize / ySize;
+
+		if (compareX <= compareY)
+        {
+			tile.transform.localScale = new Vector3(compareX, compareX, compareX);
+		}
+        else
+        {
+			tile.transform.localScale = new Vector3(compareY, compareY, compareY);
+		}
+		/*if (xSize >= 10 && xSize  < 20)
         {
 			tile.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-
 		}
+		else if (xSize >= 20 && xSize < 30)
+		{
+			tile.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+		} 
+		else if(xSize >= 30 && xSize < 40)
+        {
+			tile.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+		}
+		else if(xSize >= 40 && xSize <= 50)
+		{
+			if(ySize >= 10 && ySize <= 25)
+				tile.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+			if()
+		}*/
+
+		/*if (ySize > 10 && xSize < 20)
+        {
+			tile.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+		}*/
 
 		Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
 		float xOffset = offset.x;
@@ -62,19 +96,7 @@ public class BoardManager : MonoBehaviour
 				
 			}
 			colorsRange.Add(temp);
-
-
 		}
-        foreach (var item in colorsRange)
-        {
-			Debug.Log(item);
-        }
-		//int[] colorsRange = new int [3];
-
-		/*for (int i = 0; i < colors; i++)
-		{
-			colorsRange[i] = Random.Range(0, characters.Count);
-		}*/
 
 		float startX = transform.position.x;
 		float startY = transform.position.y;
@@ -190,10 +212,10 @@ public class BoardManager : MonoBehaviour
 			{
 				Debug.Log("x = " + i + "\ny = " + j);
 				CheckEveryOneTile(i, j, tiles[i, j]);
-				foreach(var check in checkMatchingTiles)
+				/*foreach(var check in checkMatchingTiles)
                 {
 					Debug.Log(check.GetComponent<SpriteRenderer>().sprite);
-                }
+                }*/
 				Debug.Log("=========================");
 				if (checkMatchingTiles.Count > 2 && IsAction)
                 {

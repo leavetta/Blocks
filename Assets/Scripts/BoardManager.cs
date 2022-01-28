@@ -32,18 +32,49 @@ public class BoardManager : MonoBehaviour
 
 		Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
 		Debug.Log(offset.x + " " + offset.y);
-		CreateBoard();
-		check = CheckMatches();
-		Debug.Log(check);
+		//CreateBoard();
+		//check = CheckMatches();
+		//Debug.Log(check);
 	}
 
-	public void CreateBoard()
+	public void CreateBoard(int width, int height, int colors)
 	{
+		xSize = width;
+		ySize = height;
 		//instance = GetComponent<BoardManager>();
+		if (xSize > 10)
+        {
+			tile.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+
+		}
+
 		Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
 		float xOffset = offset.x;
 		float yOffset = offset.y;
 		tiles = new GameObject[xSize, ySize];
+		List<int> colorsRange = new List<int>();
+		for (int i = 0; i < colors; i++)
+        {
+			int temp = Random.Range(0, characters.Count);
+			while (colorsRange.Contains(temp))
+            {
+				temp = Random.Range(0, characters.Count);
+				
+			}
+			colorsRange.Add(temp);
+
+
+		}
+        foreach (var item in colorsRange)
+        {
+			Debug.Log(item);
+        }
+		//int[] colorsRange = new int [3];
+
+		/*for (int i = 0; i < colors; i++)
+		{
+			colorsRange[i] = Random.Range(0, characters.Count);
+		}*/
 
 		float startX = transform.position.x;
 		float startY = transform.position.y;
@@ -56,7 +87,7 @@ public class BoardManager : MonoBehaviour
 				tiles[x, y] = newTile;
 
 				newTile.transform.parent = transform; // 1
-				Sprite newSprite = characters[Random.Range(0, 4)]; // 2
+				Sprite newSprite = characters[colorsRange[Random.Range(0, colors)]]; // 2
 				newTile.GetComponent<SpriteRenderer>().sprite = newSprite; // 3
 			}
 		}
@@ -85,7 +116,7 @@ public class BoardManager : MonoBehaviour
 		bool isFall = true;
 		List<SpriteRenderer> renders = new List<SpriteRenderer>();
 		int nullCount = 0;
-		//Debug.Log("x =" + x + "\nyStart = " + yStart);
+		Debug.Log("x =" + x + "\nyStart = " + yStart + "\nySize =" + ySize);
 		for (int y = yStart; y < ySize; y++)
 		{  // 1
 			SpriteRenderer render = tiles[x, y].GetComponent<SpriteRenderer>();

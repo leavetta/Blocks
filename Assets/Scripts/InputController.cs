@@ -7,6 +7,16 @@ public class InputController : MonoBehaviour
 
     List<GameObject> matchingTiles = new List<GameObject>();
     public bool check = false;
+    private const int WIDTH_DEFAULT = 16;
+    private const int HEIGHT_DEFAULT = 10;
+    private const int COLORS_DEFAULT = 3;
+
+    private void Start()
+    {
+        BoardManager.Instance.CreateBoard(WIDTH_DEFAULT, HEIGHT_DEFAULT, COLORS_DEFAULT);
+        check = BoardManager.Instance.CheckMatches();
+        Debug.Log(check);
+    }
 
     void Update()
     {

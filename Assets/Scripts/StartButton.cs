@@ -12,9 +12,9 @@ public class StartButton : MonoBehaviour
     //public BoardManager boardManager;
     public GameObject boardManager;
 
-    private int widthInt;
-    private int heightInt;
-    private int colorsInt;
+    private int _widthInt;
+    private int _heightInt;
+    private int _colorsInt;
 
     /*void Start()
     {
@@ -23,11 +23,12 @@ public class StartButton : MonoBehaviour
 
     public void OnStartButtonClick()
     {
-        /*widthInt = int.Parse(widthInputField.text); //обработка ошибок
-        heightInt = int.Parse(heightInputField.text);
-        colorsInt = int.Parse(colorsInputField.text);
+
+        _widthInt = int.Parse(widthInputField.text); //обработка ошибок
+        _heightInt = int.Parse(heightInputField.text);
+        _colorsInt = int.Parse(colorsInputField.text);
         
-        if ((widthInt > 50 || widthInt < 10) 
+       /*if ((widthInt > 50 || widthInt < 10) 
             && (heightInt > 50 || heightInt < 10)
             && (colorsInt > 5 || colorsInt < 2))
         {
@@ -41,6 +42,6 @@ public class StartButton : MonoBehaviour
         BoardManager.Instance.ClearBoardManager();
         GameObject newBoardManager = Instantiate(boardManager, new Vector3(-3.71f, -3.97f, 0), boardManager.transform.rotation);
         //newBoardManager.transform.parent = transform;
-        //BoardManager.Instance.CreateBoard();
+        BoardManager.Instance.CreateBoard(_widthInt, _heightInt, _colorsInt);
     }
 }

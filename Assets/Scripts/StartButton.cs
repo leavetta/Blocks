@@ -17,6 +17,11 @@ public class StartButton : MonoBehaviour
     private int _heightInt;
     private int _colorsInt;
 
+    private float widthScreenSize = 11.0f, heightScreenSize = 8.0f;
+    private float compareX = 0.7f, compareY = 0.7f;
+    private float newCompareX, newCompareY;
+
+    
     public void OnStartButtonClick()
     {
         if (widthInputField.text == "" 
@@ -28,7 +33,7 @@ public class StartButton : MonoBehaviour
         }
         else
         {
-            _widthInt = int.Parse(widthInputField.text); //обработка ошибок
+            _widthInt = int.Parse(widthInputField.text); 
             _heightInt = int.Parse(heightInputField.text);
             _colorsInt = int.Parse(colorsInputField.text);
 
@@ -42,8 +47,20 @@ public class StartButton : MonoBehaviour
             else
             {
                 panelEndGame.SetActive(false);
+
+                compareX = widthScreenSize / _widthInt;
+                compareY = heightScreenSize / _heightInt;
+                if (compareX <= compareY)
+                    compareY = compareX;
+                else
+                    compareX = compareY;
+                newCompareX = compareX * _widthInt;
+                newCompareY = compareY * _heightInt;
+                newCompareX /= 2;
+                newCompareY /= 2;
+
                 BoardManager.Instance.ClearBoardManager();
-                GameObject newBoardManager = Instantiate(boardManager, new Vector3(-4.33f, -4.12f, 0), boardManager.transform.rotation);
+                GameObject newBoardManager = Instantiate(boardManager, new Vector3(-newCompareX, -newCompareY, 0), boardManager.transform.rotation);
                 BoardManager.Instance.CreateBoard(_widthInt, _heightInt, _colorsInt);
             }
         }

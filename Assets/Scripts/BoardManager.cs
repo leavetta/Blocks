@@ -58,29 +58,6 @@ public class BoardManager : MonoBehaviour
         {
 			tile.transform.localScale = new Vector3(compareY, compareY, compareY);
 		}
-		/*if (xSize >= 10 && xSize  < 20)
-        {
-			tile.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-		}
-		else if (xSize >= 20 && xSize < 30)
-		{
-			tile.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-		} 
-		else if(xSize >= 30 && xSize < 40)
-        {
-			tile.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-		}
-		else if(xSize >= 40 && xSize <= 50)
-		{
-			if(ySize >= 10 && ySize <= 25)
-				tile.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
-			if()
-		}*/
-
-		/*if (ySize > 10 && xSize < 20)
-        {
-			tile.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-		}*/
 
 		Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
 		float xOffset = offset.x;

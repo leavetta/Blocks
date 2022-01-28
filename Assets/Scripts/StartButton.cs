@@ -18,7 +18,7 @@ public class StartButton : MonoBehaviour
     private int _colorsInt;
 
     private float widthScreenSize = 11.0f, heightScreenSize = 8.0f;
-    private float compareX = 0.7f, compareY = 0.7f;
+    private float compareX, compareY;
     private float newCompareX, newCompareY;
 
     

@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class BoardManager : MonoBehaviour
 {
-	public static BoardManager instance;
-	public List<Sprite> characters = new List<Sprite>();
+	public List<Sprite> listOfSprites = new List<Sprite>();
 	public GameObject tile;
-	public int xSize, ySize;
+	private int _xSize, _ySize;
 
-	private GameObject[,] tiles;
+	private GameObject[,] _tiles;
 
-	public List<GameObject> matchingTiles = new List<GameObject>();
-	public List<GameObject> checkMatchingTiles = new List<GameObject>();
-	public bool check = false;
+	private List<GameObject> checkMatchingTiles = new List<GameObject>();
 
 	public static BoardManager Instance { get; private set; }
-
-	public bool IsShifting { get; set; }
 
 	public bool IsAction { get; set; }
 
@@ -28,27 +23,20 @@ public class BoardManager : MonoBehaviour
 
 	public void Start()
 	{
-		//instance = GetComponent<BoardManager>();
-
 		Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
-		Debug.Log(offset.x + " " + offset.y);
-		//CreateBoard();
-		//check = CheckMatches();
-		//Debug.Log(check);
 	}
 
 	public void CreateBoard(int width, int height, int colors)
 	{
-		xSize = width;
-		ySize = height;
-		//instance = GetComponent<BoardManager>();
+		_xSize = width;
+		_ySize = height;
 
 		float widthScreenSize = 11.0f;
 		float heightScreenSize = 8.0f;
-		float compareX = 0.7f, compareY = 0.7f;
+		float compareX, compareY;
 
-		compareX = widthScreenSize / xSize;
-		compareY = heightScreenSize / ySize;
+		compareX = widthScreenSize / _xSize;
+		compareY = heightScreenSize / _ySize;
 
 		if (compareX <= compareY)
         {
@@ -62,14 +50,16 @@ public class BoardManager : MonoBehaviour
 		Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
 		float xOffset = offset.x;
 		float yOffset = offset.y;
-		tiles = new GameObject[xSize, ySize];
+		_tiles = new GameObject[_xSize, _ySize];
+
 		List<int> colorsRange = new List<int>();
+
 		for (int i = 0; i < colors; i++)
         {
-			int temp = Random.Range(0, characters.Count);
+			int temp = Random.Range(0, listOfSprites.Count);
 			while (colorsRange.Contains(temp))
             {
-				temp = Random.Range(0, characters.Count);
+				temp = Random.Range(0, listOfSprites.Count);
 				
 			}
 			colorsRange.Add(temp);
@@ -78,16 +68,16 @@ public class BoardManager : MonoBehaviour
 		float startX = transform.position.x;
 		float startY = transform.position.y;
 
-		for (int x = 0; x < xSize; x++)
+		for (int x = 0; x < _xSize; x++)
 		{
-			for (int y = 0; y < ySize; y++)
+			for (int y = 0; y < _ySize; y++)
 			{
 				GameObject newTile = Instantiate(tile, new Vector3(startX + (xOffset * x), startY + (yOffset * y), 0), tile.transform.rotation);
-				tiles[x, y] = newTile;
+				_tiles[x, y] = newTile;
 
-				newTile.transform.parent = transform; // 1
-				Sprite newSprite = characters[colorsRange[Random.Range(0, colors)]]; // 2
-				newTile.GetComponent<SpriteRenderer>().sprite = newSprite; // 3
+				newTile.transform.parent = transform;
+				Sprite newSprite = listOfSprites[colorsRange[Random.Range(0, colors)]];
+				newTile.GetComponent<SpriteRenderer>().sprite = newSprite;
 			}
 		}
 		IsAction = false; 
@@ -95,14 +85,12 @@ public class BoardManager : MonoBehaviour
 
 	public void FallBlocks()
 	{
-		//GameObject temp = Instantiate(tile, new Vector3(startX + (xOffset * x), startY + (yOffset * y), 0), tile.transform.rotation);
-		for (int x = 0; x < xSize; x++)
+		for (int x = 0; x < _xSize; x++)
 		{
-			for (int y = 0; y < ySize; y++)
+			for (int y = 0; y < _ySize; y++)
 			{
-				if (tiles[x, y].GetComponent<SpriteRenderer>().sprite == null)
+				if (_tiles[x, y].GetComponent<SpriteRenderer>().sprite == null)
 				{
-					//Debug.Log(y);
 					ShiftTilesDown(x, y);
 					break;
 				}
@@ -110,34 +98,32 @@ public class BoardManager : MonoBehaviour
 		}
 	}
 
-	private void ShiftTilesDown(int x, int yStart, float shiftDelay = .03f)
+	private void ShiftTilesDown(int x, int yStart)
 	{
-		bool isFall = true;
 		List<SpriteRenderer> renders = new List<SpriteRenderer>();
 		int nullCount = 0;
-		Debug.Log("x =" + x + "\nyStart = " + yStart + "\nySize =" + ySize);
-		for (int y = yStart; y < ySize; y++)
-		{  // 1
-			SpriteRenderer render = tiles[x, y].GetComponent<SpriteRenderer>();
+		
+		for (int y = yStart; y < _ySize; y++)
+		{
+			SpriteRenderer render = _tiles[x, y].GetComponent<SpriteRenderer>();
 			if (render.sprite == null)
-			{ // 2
+			{
 				nullCount++;
 			}
 			renders.Add(render);
 		}
 
-		for (int y = ySize - 1; y >= yStart; y--)
+		for (int y = _ySize - 1; y >= yStart; y--)
 		{
-			SpriteRenderer render = tiles[x, y].GetComponent<SpriteRenderer>();
+			SpriteRenderer render = _tiles[x, y].GetComponent<SpriteRenderer>();
 			if (render.sprite == null)
-			{ // 2
+			{
 				nullCount--;
 			}
 			else
 				break;
 		}
 
-		//Debug.Log("nullCount = " + nullCount + "\nrenders.Count = " + renders.Count);
 		int j = 0;
 		for (int i = 0; i < nullCount; i++)
 		{
@@ -150,50 +136,35 @@ public class BoardManager : MonoBehaviour
 			}
 			for (int k = j; k < renders.Count - 1; k++)
 			{
-				/*if(renders[0].sprite != null)
-                {
-					renders.RemoveAt(0);
-					continue;
-				}*/
 				Sprite temp = renders[k].GetComponent<SpriteRenderer>().sprite;
-				/*Debug.Log("Count " + (i + 1) + "\ny " + (k + yStart) + "\ntempSprite" + temp + "\n"
-					+ "renerKSprite" + renders[k].sprite + "\n" +
-					"renderK1Sprite" + renders[k + 1].sprite);*/
 				renders[k].sprite = renders[k + 1].sprite;
 				renders[k + 1].sprite = temp;
 			}
 			j = 0;
 		}
-		IsShifting = false;
 	}
 
 	public void ClearBoardManager()
     {
-		//tiles = new GameObject[0, 0];
-		for (int x = 0; x < xSize; x++)
+		for (int x = 0; x < _xSize; x++)
 		{
-			for (int y = 0; y < ySize; y++)
+			for (int y = 0; y < _ySize; y++)
 			{
-				tiles[x, y].GetComponent<SpriteRenderer>().sprite = null;
+				_tiles[x, y].GetComponent<SpriteRenderer>().sprite = null;
 			}
 		}
-		//characters.Clear();
+
 		Destroy(gameObject);
     }
 
 	public bool CheckMatches()
     {
-		for (int i = 0; i < xSize; i++)
+		for (int i = 0; i < _xSize; i++)
 		{
-			for (int j = 0; j < ySize; j++)
+			for (int j = 0; j < _ySize; j++)
 			{
-				Debug.Log("x = " + i + "\ny = " + j);
-				CheckEveryOneTile(i, j, tiles[i, j]);
-				/*foreach(var check in checkMatchingTiles)
-                {
-					Debug.Log(check.GetComponent<SpriteRenderer>().sprite);
-                }*/
-				Debug.Log("=========================");
+				CheckEveryOneTile(i, j, _tiles[i, j]);
+				
 				if (checkMatchingTiles.Count > 2 && IsAction)
                 {
 					checkMatchingTiles.Clear();
@@ -209,18 +180,17 @@ public class BoardManager : MonoBehaviour
 
 	public void CheckEveryOneTile(int x, int y, GameObject comparer)
     {
-		if (tiles[x, y].GetComponent<SpriteRenderer>().sprite != null
-			&& tiles[x, y].GetComponent<SpriteRenderer>().sprite
+		if (_tiles[x, y].GetComponent<SpriteRenderer>().sprite != null
+			&& _tiles[x, y].GetComponent<SpriteRenderer>().sprite
 			== comparer.GetComponent<SpriteRenderer>().sprite)
-			if (!checkMatchingTiles.Contains(tiles[x, y].gameObject))
+			if (!checkMatchingTiles.Contains(_tiles[x, y].gameObject))
 			{
-				checkMatchingTiles.Add(tiles[x, y].gameObject);
+				checkMatchingTiles.Add(_tiles[x, y].gameObject);
 				if (checkMatchingTiles.Count > 2)
                 {
 					IsAction = true;
 					return;
 				}
-				//ClearMatchMain(rayHit, allHitsUp[1].transform.position, allHitsUp[1]);
 			}
 			else
 				return;
@@ -231,9 +201,9 @@ public class BoardManager : MonoBehaviour
 			CheckEveryOneTile(x - 1, y, comparer);
 		if (y > 0)
 			CheckEveryOneTile(x, y - 1, comparer);
-		if (x < xSize - 1)
+		if (x < _xSize - 1)
 			CheckEveryOneTile(x + 1, y, comparer);
-		if (y < ySize - 1)
+		if (y < _ySize - 1)
 			CheckEveryOneTile(x, y + 1, comparer);
 
 	}

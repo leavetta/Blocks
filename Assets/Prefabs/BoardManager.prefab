@@ -43,19 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e013a946d7ec01488daccd0cbeb52e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characters:
+  listOfSprites:
   - {fileID: 21300000, guid: 20c5560837f65274abbca6c13e655d24, type: 3}
   - {fileID: 21300000, guid: 5478963c37814124f9dea400ce6b4428, type: 3}
-  - {fileID: 21300000, guid: bdd0a56e34ce87644b1c0d8a43f91864, type: 3}
-  - {fileID: 21300000, guid: 33fa02f45c450e84dacd425b7cfdc82e, type: 3}
-  - {fileID: 21300000, guid: 9ef7429fa14b07746b5a1cffbf594fba, type: 3}
   - {fileID: 21300000, guid: ab4ad69208a41d946a6e060242a19e95, type: 3}
   - {fileID: 21300000, guid: 9f6f897ef26dcea42a92ec2ec2ab6c64, type: 3}
-  - {fileID: 21300000, guid: 2ec1068b070df9f44bb4fb40bdcfc204, type: 3}
   - {fileID: 21300000, guid: 86dc41eaaf0760542a81e287a5117806, type: 3}
+  - {fileID: 21300000, guid: 33fa02f45c450e84dacd425b7cfdc82e, type: 3}
   tile: {fileID: 6666909382244778299, guid: 2766eebaa23bb914d8855ca6bf981fde, type: 3}
-  xSize: 12
-  ySize: 12
   matchingTiles: []
   checkMatchingTiles: []
-  check: 0

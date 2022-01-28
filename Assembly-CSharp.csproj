@@ -56,15 +56,12 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Grid.cs" />
-    <Compile Include="Assets\Scripts\Tile.cs" />
     <Compile Include="Assets\Scripts\StartButton.cs" />
     <Compile Include="Assets\Scripts\BoardManager.cs" />
-    <Compile Include="Assets\Scripts\InputController.cs" />
-    <Compile Include="Assets\Scripts\Tile1.cs" />
-    <Compile Include="Assets\Scripts\OkButton.cs" />
     <Compile Include="Assets\Scripts\RestartButton.cs" />
     <Compile Include="Assets\Scripts\EndGameButton.cs" />
+    <Compile Include="Assets\Scripts\InputController.cs" />
+    <Compile Include="Assets\Scripts\OkButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

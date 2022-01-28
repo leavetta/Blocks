@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
@@ -12,11 +13,13 @@ public class InputController : MonoBehaviour
     private const int COLORS_DEFAULT = 3;
 
     public GameObject panelEndGame;
-
+    public Text scoreText;
+    //private int score = 0;
     public GameObject sound;
 
     private void Start()
     {
+        //BoardManager.Instance.Score = 0;
         BoardManager.Instance.CreateBoard(WIDTH_DEFAULT, HEIGHT_DEFAULT, COLORS_DEFAULT);
         _checkMoves = BoardManager.Instance.CheckMatches();
     }
@@ -78,12 +81,14 @@ public class InputController : MonoBehaviour
     {
         if (matchingTiles.Count > 2)
         {
+            BoardManager.Instance.Score += matchingTiles.Count;
             Instantiate(sound, rayHit.transform.position, Quaternion.identity);
             for (int i = 0; i < matchingTiles.Count; i++)
             {
                 matchingTiles[i].GetComponent<SpriteRenderer>().sprite = null;
             }
         }
+        scoreText.text = BoardManager.Instance.Score.ToString();
         matchingTiles.Clear();
     }
 

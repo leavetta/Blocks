@@ -11,7 +11,7 @@ public class BoardManager : MonoBehaviour
 	private GameObject[,] _tiles;
 
 	private List<GameObject> checkMatchingTiles = new List<GameObject>();
-
+	public int Score { get; set; }
 	public static BoardManager Instance { get; private set; }
 
 	public bool IsAction { get; set; }
@@ -23,6 +23,7 @@ public class BoardManager : MonoBehaviour
 
 	public void Start()
 	{
+		Score = 0;
 		Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
 	}
 
